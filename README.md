@@ -1,2 +1,4 @@
 # jenkins_testing
-Tests for running jenkins tests
+This repo is just a test for running tests on jenkins
+
+# Setup:
