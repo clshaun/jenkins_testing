@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyleniumio = "*"
+pyleniumio = "1.4.0"
 webdriver-manager = "*"
 python-decouple = "*"
 
