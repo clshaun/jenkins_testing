@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 pyleniumio = "*"
+webdriver-manager = "*"
+python-decouple = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.8.9"
