@@ -15,12 +15,31 @@ def test_google_search_stuff(py):
     assert py.should().contain_title('This is a test')
 
 
-def test_login_to_instagram_and_steal_pictures(py, the_gram):
-    username = config("USERNAME")
-    password = config("PASSWORD")
-    the_gram.login.login_to_the_gram(username, password)
+def test_weather_site(py, the_gram):
+    assert_list = []
+
+    get_temp = the_gram.home.goto_weather_site()
+    if not py.should().contain_title('Current Temperature'):
+        assert_list.append(f"Did not land on the homepage. Actual page is {py.title()}")
+
+    if not isinstance(get_temp, int):
+        assert_list.append(f"The temp did not display correctly. Actual was {get_temp}")
+
+    the_gram.home.click_buy_moisturizers()
+
+    if not py.should().contain_title('Moisturizers'):
+        assert_list.append(f"The site did not navigate correctly to the purchase moisturizers page. "
+                           f"Actual page it {py.title()}")
+
+    assert not assert_list, assert_list
 
 
 def test_api(api):
     response = api.get("https://www.google.com")
     assert response.status_code == 200
+
+
+# def test_login_to_instagram_and_grab_pictures(py, the_gram):
+#     username = config("USERNAME")
+#     password = config("PASSWORD")
+#     the_gram.login.login_to_the_gram(username, password)
