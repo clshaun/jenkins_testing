@@ -15,17 +15,17 @@ def test_google_search_stuff(py):
     assert py.should().contain_title('This is a test')
 
 
-def test_weather_site(py, the_gram):
+def test_weather_site(py, pages):
     assert_list = []
 
-    get_temp = the_gram.home.goto_weather_site()
+    get_temp = pages.home.goto_weather_site()
     if not py.should().contain_title('Current Temperature'):
         assert_list.append(f"Did not land on the homepage. Actual page is {py.title()}")
 
     if not isinstance(get_temp, int):
         assert_list.append(f"The temp did not display correctly. Actual was {get_temp}")
 
-    the_gram.home.click_buy_moisturizers()
+    pages.home.click_buy_moisturizers()
 
     if not py.should().contain_title('Moisturizers'):
         assert_list.append(f"The site did not navigate correctly to the purchase moisturizers page. "

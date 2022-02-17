@@ -1,6 +1,6 @@
 import time
 
-from instagram_com.pages.base_page import BasePage
+from selenium_testing.pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
