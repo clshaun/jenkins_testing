@@ -1,8 +1,8 @@
+import os.path
 import re
 import time
 
-from selenium.webdriver import Keys
-
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium_testing.pages.base_page import BasePage
 
 
@@ -52,12 +52,45 @@ class HomePage(BasePage):
         self.fill_out_display_name(profile['display_name'])
         self.fill_out_about_me(profile['about_me'])
 
-    # def change_profile_picture(self):
-    #     a = self.py.getx("//body/form[1]/input[1]").type("/selenium_testing/assets/bender.jpeg")
-    #     a.type(Keys.ENTER)
-    #     time.sleep(8)
+    def change_profile_picture(self):
+        path = os.path.dirname(__file__).split("pages")[0]
+        self.py.getx("//body/form[1]/input[1]").type(f"{path}/assets/bender.jpeg")
 
+    def click_add_profile_links(self, link_to_follow="Add URL"):
+        add_url_xpath = "//button[contains(text(),'Add URL')]"
+        add_wordpress_site_xpath = "//button[contains(text(),'Add WordPress Site')]"
 
+        self.click_element(xpath="//span[contains(text(),'Add')]")
+        if link_to_follow == "Add URL":
+            self.py.getx(add_url_xpath).should().be_visible()
+            self.click_element(xpath=add_url_xpath)
+        elif link_to_follow == "Add Wordpress Site":
+            self.py.getx(add_wordpress_site_xpath).should().be_visible()
+            self.click_element(xpath=add_wordpress_site_xpath)
+
+    def fill_out_add_url_section(self, url, description, submit=True):
+        self.py.getx("//input[@name='value']").type(url)
+        self.py.getx("//input[@name='title']").type(description)
+
+        if submit and self.py.findx("//button[contains(text(),'Add Site')]"):
+            self.click_element(xpath="//button[contains(text(),'Add Site')]")
+
+    def fill_out_and_cancel_url_section(self, url, description):
+        self.fill_out_add_url_section(url, description, submit=False)
+        self.click_element(xpath="//button[contains(text(),'Cancel')]")
+        return self.get_profile_links()
+
+    def get_profile_links(self):
+        return self.py.getx("//div[@class='card'//div").text()
+
+    def del_profile_links(self):
+        delete_els = self.py.find("button.button.profile-link__remove.is-borderless")
+        for x in range(len(delete_els)):
+            for y in delete_els:
+                try:
+                    y.click()
+                except StaleElementReferenceException:
+                    continue
 
     def save_profile(self):
         count = 0

@@ -21,7 +21,7 @@ class BasePage:
         self.py.wait(timeout).until(staleness_of(old_page))
         time.sleep(1)
 
-    def click_element(self, xpath=None, css=None, timeout=5, page_redirect=False):
+    def click_element(self, xpath=None, css=None, timeout=15, page_redirect=False):
         if xpath:
             el = self.py.getx(xpath, timeout)
         elif css:

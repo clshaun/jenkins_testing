@@ -38,8 +38,14 @@ def test_fill_out_random_info_for_my_profile(py, pages, setup, teardown):
     assert not assert_list, assert_list
 
 
-def test_adding_profile_picture(py, pages, setup, teardown):
-    pages.home.change_profile_picture()
+def test_add_file_links(py, pages, fake, setup, teardown):
+    url = fake.domain_name()
+    description = fake.text(25)
+    pages.home.click_add_profile_links()
+    pages.home.fill_out_add_url_section(url, description)
+    py.reload()
+    for x in [url, description]:
+        py.getx("//div[@class='card']//div").should().contain_text(x)
 
 
 @pytest.fixture
@@ -57,6 +63,7 @@ def teardown(py, pages):
                                            display_name="JenkinsTester",
                                            about_me=" ")
     pages.home.save_profile()
+    pages.home.del_profile_links()
     pages.home.logout()
 
 
