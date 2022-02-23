@@ -7,9 +7,9 @@ name = "pypi"
 pyleniumio = "1.13.0"
 webdriver-manager = "*"
 python-decouple = "*"
+faker = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.6.9"
-
