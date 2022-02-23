@@ -1,11 +1,13 @@
 import pytest
 
 
+@pytest.mark.heroku
 def test_home_page_navigation(py, pages):
     pages.home.goto_heroku_home_page()
     assert py.title() == "The Internet", f"Did not navigate correctly to the home page. Actual site: {py.title()}"
 
 
+@pytest.mark.heroku
 def test_add_remove_elements(py, pages, teardown_add_remove_elements):
     assert_list = []
     els = []
