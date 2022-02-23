@@ -4,8 +4,10 @@ This is a demo of tests running selenium that will run on jenkins
 Things to note: 
 A .env file will need to be added when running locally to run wordpress tests, under the tests folder
 Ex:
-WORDPRESSUSERNAME=username
+```
+WORDPRESSUSERNAME=tester
 WORDPRESSPASSWORD=Password123
+```
 
 # Setup:
 To run tests with pytest, you can run them through the command line
