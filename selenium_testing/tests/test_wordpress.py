@@ -3,12 +3,14 @@ from decouple import config
 from faker import Faker
 
 
+@pytest.mark.wordpress
 def test_login_to_word_press(py, pages):
     pages.login.login_to_wordpress(config("WORDPRESSUSERNAME"),
                                    config("WORDPRESSPASSWORD"))
     assert "My Profile" in py.title()
 
 
+@pytest.mark.wordpress
 def test_fill_out_random_info_for_my_profile(py, pages, setup, teardown):
     fake = Faker()
     assert_list = []
@@ -38,6 +40,7 @@ def test_fill_out_random_info_for_my_profile(py, pages, setup, teardown):
     assert not assert_list, assert_list
 
 
+@pytest.mark.wordpress
 def test_add_file_links(py, pages, fake, setup, teardown):
     url = fake.domain_name()
     description = fake.text(25)
